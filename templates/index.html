@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DecideFast — Ask your data, get a decision</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+<canvas id="particleCanvas" class="particle-canvas"></canvas>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">DF</span>
+    <span class="brand-name">DecideFast</span>
+  </div>
+  <div class="topbar-right">
+    <span class="live-clock" id="liveClock">00:00:00</span>
+    <div class="status-cluster">
+      <span class="status-dot" id="statusDot"></span>
+      <span class="status-text" id="statusText">SYSTEM READY</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="hero-eyebrow">Data intelligence · powered by Gemini</p>
+      <h1>Stop staring at spreadsheets.<br><span class="accent">Ask them.</span></h1>
+      <p class="hero-sub">Upload your data. Ask a plain-English question. Watch the needle move from raw rows to a grounded recommendation.</p>
+    </div>
+
+    <div class="gauge-block">
+      <div class="radar-sweep"></div>
+      <svg class="gauge" viewBox="0 0 240 160" aria-hidden="true">
+        <path class="gauge-track" d="M 30 130 A 90 90 0 0 1 210 130" />
+        <path class="gauge-fill-zone gz-low" d="M 30 130 A 90 90 0 0 1 75.8 51.1" />
+        <path class="gauge-fill-zone gz-mid" d="M 75.8 51.1 A 90 90 0 0 1 164.2 51.1" />
+        <path class="gauge-fill-zone gz-high" d="M 164.2 51.1 A 90 90 0 0 1 210 130" />
+        <g class="gauge-ticks" id="gaugeTicks"></g>
+        <g class="gauge-tick-labels" id="gaugeTickLabels"></g>
+        <circle class="gauge-hub" cx="120" cy="130" r="7" />
+        <line class="gauge-needle" id="gaugeNeedle" x1="120" y1="130" x2="120" y2="52" />
+      </svg>
+      <div class="gauge-readout">
+        <span class="gauge-value" id="gaugeValue">0</span>
+        <span class="gauge-label" id="gaugeLabel">DECISION VELOCITY</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="workbench">
+
+    <div class="panel intake-panel" id="uploadPanel">
+      <div class="panel-header">
+        <span class="panel-num">01</span>
+        <span class="panel-title">Load your data</span>
+      </div>
+
+      <div class="dropzone" id="dropzone">
+        <input type="file" id="fileInput" accept=".csv" hidden>
+        <div class="dropzone-scan" id="dropzoneScan"></div>
+        <div class="dropzone-inner" id="dropzoneInner">
+          <i class="dz-icon">⤓</i>
+          <p class="dz-title">Drop a .csv here</p>
+          <p class="dz-sub">or <button type="button" id="browseBtn" class="link-btn">browse a file</button></p>
+        </div>
+      </div>
+
+      <div class="dataset-summary" id="datasetSummary" hidden>
+        <div class="ds-row"><span>File</span><span id="dsFilename">—</span></div>
+        <div class="ds-row odometer-row">
+          <span>Rows</span>
+          <span class="odometer" id="dsRows">0</span>
+        </div>
+        <div class="ds-row"><span>Columns</span><span id="dsCols">—</span></div>
+      </div>
+
+      <div class="preview-table-wrap" id="previewWrap" hidden>
+        <table class="preview-table" id="previewTable"></table>
+      </div>
+    </div>
+
+    <div class="panel ask-panel" id="askPanel">
+      <div class="panel-header">
+        <span class="panel-num">02</span>
+        <span class="panel-title">Ask a question</span>
+      </div>
+
+      <div class="suggestions" id="suggestions" hidden></div>
+
+      <form id="askForm">
+        <textarea id="questionInput" placeholder="e.g. Which product category is losing money, and what should I do about it?" rows="3" disabled></textarea>
+        <button type="submit" id="askBtn" disabled>
+          <span id="askBtnLabel">Get decision</span>
+        </button>
+      </form>
+
+      <div class="answer-zone" id="answerZone">
+        <div class="empty-state" id="emptyState">
+          <p>Upload a CSV, then ask a real question about it.</p>
+          <p class="empty-sub">Try: "What should I restock first?" or "Where am I overspending?"</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+</main>
+
+<footer class="footer">
+  Built on Gemini · Google Cloud Gen AI Academy APAC Edition
+</footer>
+
+<script src="/static/script.js"></script>
+</body>
+</html>
